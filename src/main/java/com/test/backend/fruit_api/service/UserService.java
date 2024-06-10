@@ -2,6 +2,7 @@ package com.test.backend.fruit_api.service;
 
 import com.test.backend.fruit_api.entity.User;
 import com.test.backend.fruit_api.model.RegisterUserRequest;
+import com.test.backend.fruit_api.model.UserResponse;
 import com.test.backend.fruit_api.repository.UserRepository;
 import com.test.backend.fruit_api.security.BCrypt;
 import jakarta.transaction.Transactional;
@@ -38,6 +39,13 @@ public class UserService {
         user.setName(request.getName());
 
         userRepository.save(user);
+    }
+
+    public UserResponse get(User user) {
+        return UserResponse.builder()
+                .username(user.getUsername())
+                .name(user.getName())
+                .build();
     }
 
 }

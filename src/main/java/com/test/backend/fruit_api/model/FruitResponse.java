@@ -9,9 +9,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WebResponse<T> {
+public class FruitResponse {
 
-    private T data;
+    private String id;
 
-    private String errors;
+    private String name;
+
+    private String color;
+
+    private String origin;
+
+    private Integer price;
+
 }

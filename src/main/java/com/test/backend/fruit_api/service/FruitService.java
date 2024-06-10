@@ -1,19 +1,28 @@
 package com.test.backend.fruit_api.service;
 
 import com.test.backend.fruit_api.entity.Fruit;
+import com.test.backend.fruit_api.entity.User;
+import com.test.backend.fruit_api.model.FruitResponse;
 import com.test.backend.fruit_api.repository.FruitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FruitService {
 
     @Autowired
     private FruitRepository fruitRepository;
+
+    public List<FruitResponse> findAllFruits() {
+        List<Fruit> fruits = fruitRepository.findAllActiveFruits();
+
+        return fruits.stream()
+                .map(this::toFruitResponse)
+                .collect(Collectors.toList());
+    }
 
     public List<Fruit> getAllFruits() {
         return fruitRepository.findAllActiveFruits();
@@ -47,5 +56,16 @@ public class FruitService {
             fruitRepository.save(fruit);
         });
     }
+
+    private FruitResponse toFruitResponse(Fruit fruit) {
+        return FruitResponse.builder()
+                .id(fruit.getId())
+                .name(fruit.getName())
+                .color(fruit.getColor())
+                .origin(fruit.getOrigin())
+                .price(fruit.getPrice())
+                .build();
+    }
+
 
 }
